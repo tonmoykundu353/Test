@@ -1,0 +1,69 @@
+-- BloodBank Table 
+
+Create table BloodBank(
+Blood_Bank_id number(10),
+Blood_Bank_name varchar2(30),
+location varchar2(100) not null,
+contact_person_name varchar2(50) not null,
+contact_number number(15) not null,
+primary key(Blood_Bank_id,Blood_Bank_name)
+);
+
+-- BloodCollection Table
+ 
+Create table BloodCollection(
+Blood_Bank_id number(10),
+Blood_Bank_name varchar2(30),
+Quantity_A_positive number(5) default 0,
+Quantity_A_negative number(5) default 0,
+Quantity_B_positive number(5) default 0,
+Quantity_B_negative number(5) default 0,
+Quantity_O_positive number(5) default 0,
+Quantity_O_negative number(5) default 0,
+Quantity_AB_positive number(5) default 0,
+Quantity_AB_negative number(5) default 0,
+primary key(Blood_Bank_id,Blood_Bank_name),
+foreign key(Blood_Bank_id,Blood_Bank_name) references BloodBank(Blood_Bank_id,Blood_Bank_name)
+);
+
+-- DonorDetails Table
+Create table DonorDetails(
+Donor_id number(10),
+Donor_name varchar2(30),
+Blood_Bank_id number(10),
+Blood_Bank_name varchar2(30),
+age number(5) check (age >= 18 and age <= 55) ,
+gender varchar2(10) null,
+Address varchar2(100) null,
+contact_number number(11) null,
+NID_card_number number(20) null,
+primary key(Donor_id,Donor_name),
+foreign key(Blood_Bank_id,Blood_Bank_name) references BloodBank(Blood_Bank_id,Blood_Bank_name)
+);
+
+-- Transfussion Table
+ 
+Create table Transfussion(
+transfussion_id number(10),
+Blood_Bank_id number(10) not null,
+Blood_Bank_name varchar2(30) not null,
+Received_Quantity number(10) default 0,
+date_of_transfussion varchar2(100) not null,
+monitoring_doc_name varchar2(11) null,
+primary key(transfussion_id),
+foreign key(Blood_Bank_id,Blood_Bank_name) references BloodBank(Blood_Bank_id,Blood_Bank_name)
+);
+
+
+-- BloodStorageCondition Table
+
+Create table BloodStorageCondition(
+Blood_Bank_id number(10),
+Blood_Bank_name varchar2(30),
+Expire_Date_A_group varchar2(20) not null,
+Expire_Date_B_group varchar2(20) not null,
+Expire_Date_O_group varchar2(20) not null,
+Expire_Date_AB_group varchar2(20) not null,
+primary key(Blood_Bank_id,Blood_Bank_name),
+foreign key(Blood_Bank_id,Blood_Bank_name) references BloodBank(Blood_Bank_id,Blood_Bank_name)
+);
