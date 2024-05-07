@@ -1,0 +1,323 @@
+-- using subquery 
+
+-- Q1: finding BloodBank details if it has quantity of A+ blood less than 60 unit
+select * from BloodBank where Blood_Bank_id=
+(select Blood_Bank_id from BloodCollection where Quantity_A_positive<60);
+
+--Q2:List the names of donors (Donor_name) who have donated blood to blood banks located in Dhaka (location) and are between the ages of 18 and 30.
+SELECT Donor_name FROM DonorDetails
+WHERE Blood_Bank_name IN (SELECT Blood_Bank_name FROM BloodBank WHERE location = 'Dhaka, Bangladesh')
+  AND age BETWEEN 18 AND 30;
+
+--Q3:Calculate the total number of units of blood across all blood banks.
+SELECT SUM(Quantity_A_positive + Quantity_A_negative + Quantity_B_positive + Quantity_B_negative + Quantity_O_positive + Quantity_O_negative + Quantity_AB_positive + Quantity_AB_negative) AS Total_Units
+FROM BloodCollection;
+
+
+-- Updating the tables
+--Q1. to update the contact number of a donor named 'Abdul Rahman' who donated blood to the 'Dhaka Blood Bank'. Here's how you can write the SQL query:
+UPDATE DonorDetails SET contact_number = 9876543210  -- New contact number to update
+WHERE Donor_name = 'Abdul Rahman'AND Blood_Bank_name = 'Dhaka Blood Bank';
+
+--Q2: to increase the quantity of blood type 'A+' (Quantity_A_positive) collected by the 'Dhaka Blood Bank'. Here's how you can write the SQL query:
+UPDATE BloodCollection
+SET Quantity_A_positive = Quantity_A_positive + 20  -- Increase by 20 units
+WHERE Blood_Bank_name = 'Dhaka Blood Bank';
+
+
+--Deleting row operation
+ --Q1: Deleting rows of donortables where age is less than 25
+DELETE FROM DonorDetails
+WHERE Donor_id IN (
+    SELECT Donor_idfon
+    FROM DonorDetails
+    WHERE age < 25
+);
+
+
+-- Union operation 
+-- Query to retrieve contact persons and their details from BloodBank table
+SELECT 
+    contact_person_name AS contact_name,
+    Blood_Bank_name AS organization,
+    contact_number AS contact_info
+FROM BloodBank
+UNION 
+SELECT 
+    Donor_name AS contact_name,
+    Blood_Bank_name AS organization,
+    contact_number AS contact_info
+FROM DonorDetails;
+
+-- Intersect operation
+
+-- Query to find common blood banks between BloodBank and DonorDetails tables using INTERSECT
+SELECT Blood_Bank_id, Blood_Bank_name FROM BloodBank
+INTERSECT
+SELECT Blood_Bank_id, Blood_Bank_name FROM DonorDetails;
+
+-- using aggregate functions
+
+-- Q1.Count the number of donors in the DonorDetails table
+SELECT COUNT(*) AS TotalDonors
+FROM DonorDetails;
+
+-- Q2.Calculate the total quantity of blood collected (A+ and A-) at a specific blood bank
+SELECT SUM(Quantity_A_positive + Quantity_A_negative) AS TotalBloodA
+FROM BloodCollection
+WHERE Blood_Bank_id = 1;
+
+--Q3. Find the minimum age among donors in the DonorDetails table
+SELECT MIN(age) AS MinAge
+FROM DonorDetails;
+
+
+-- using group by command
+
+-- Q4.find the average quantity of A+ blood for each blood bank
+SELECT
+    Blood_Bank_id,
+    AVG(Quantity_A_positive) AS AverageQuantityA_positive
+FROM
+    BloodCollection
+GROUP BY
+    Blood_Bank_id;
+
+-- Using set membership operators
+-- Q1.Retrieve Donors Within a Specific Age Range
+SELECT *
+FROM DonorDetails
+WHERE age BETWEEN 18 AND 30;
+
+--Q2.Retrieve Donors from Multiple Blood Banks:
+SELECT *
+FROM DonorDetails
+WHERE Blood_Bank_name = 'Dhaka Blood Bank'
+   OR Blood_Bank_name = 'Chittagong Blood Bank';
+
+--Q3.Retrieve Donors Not from a Specific Blood Bank:
+SELECT *
+FROM DonorDetails
+WHERE NOT Blood_Bank_name = 'Rajshahi Blood Bank';
+
+--Q4.Retrieve Donors from Specific Blood Banks and Exclude a Specific Age Range:
+SELECT *
+FROM DonorDetails
+WHERE (Blood_Bank_name = 'Khulna Blood Bank' OR Blood_Bank_name = 'Barisal Blood Bank')
+  AND NOT (age BETWEEN 40 AND 50);
+
+
+-- Using some/all/exists/unique
+
+-- Q1.Find donors who donated more than some of the quantities in BloodCollection
+SELECT *
+FROM DonorDetails d
+WHERE age > SOME (
+    SELECT Quantity_A_positive
+    FROM BloodCollection
+    WHERE Blood_Bank_id = d.Blood_Bank_id
+);
+
+-- Q2.Find donors who donated more than all quantities in BloodCollection
+SELECT *
+FROM DonorDetails d
+WHERE age > ALL (
+    SELECT Quantity_A_positive
+    FROM BloodCollection
+    WHERE Blood_Bank_id = d.Blood_Bank_id
+);
+
+
+-- using %operator
+--Q1.want to find blood banks located in a particular city (e.g., those located in Dhaka).
+SELECT *
+FROM BloodBank
+WHERE location LIKE '%Dhaka%';
+
+
+--join operations
+-- inner join
+--Q1. Retrieve the names of donors along with the blood bank names they are associated with.
+SELECT d.Donor_name, b.Blood_Bank_name
+FROM DonorDetails d
+INNER JOIN BloodBank b ON d.Blood_Bank_id = b.Blood_Bank_id;
+
+--Left Join 
+--Q2.Retrieve all blood banks and the total quantities of blood collected (sum of all blood types) from each blood bank, including blood banks that have no collections yet.
+SELECT b.Blood_Bank_name, 
+       COALESCE(SUM(bc.Quantity_A_positive + bc.Quantity_A_negative 
+                  + bc.Quantity_B_positive + bc.Quantity_B_negative 
+                  + bc.Quantity_O_positive + bc.Quantity_O_negative 
+                  + bc.Quantity_AB_positive + bc.Quantity_AB_negative), 0) AS Total_Collected
+FROM BloodBank b
+LEFT JOIN BloodCollection bc ON b.Blood_Bank_id = bc.Blood_Bank_id
+GROUP BY b.Blood_Bank_name;
+
+--Right Join
+--Q3.Retrieve a list of blood donors along with their associated blood bank names, including donors who have not been associated with any blood bank yet.
+SELECT d.Donor_name, b.Blood_Bank_name
+FROM DonorDetails d
+RIGHT JOIN BloodBank b ON d.Blood_Bank_id = b.Blood_Bank_id;
+
+
+-- View creation
+-- Q1. create view for BloodStorage condition
+
+CREATE VIEW BloodStorageCondition_View AS
+SELECT Blood_Bank_id, Expire_Date_A_group
+FROM BloodStorageCondition;
+
+-- call the view
+SELECT * FROM BloodStorageCondition_View;
+
+
+
+-- pl/sql 
+--Q1. count the number of donors in donorstable
+set serveroutput on
+DECLARE
+    v_row_count NUMBER;
+BEGIN
+    -- Query to count the number of rows in DonorDetails table
+    SELECT COUNT(*) INTO v_row_count
+    FROM DonorDetails;
+    DBMS_OUTPUT.PUT_LINE('Total number of rows in DonorDetails table: ' || v_row_count);
+END;
+/
+
+--Q2, retrieve data from your DonorDetails table and display information about a specific donor.
+
+-- Enable DBMS_OUTPUT for displaying output
+SET SERVEROUTPUT ON;
+
+-- Declare a record variable based on the DonorDetails table's row type
+DECLARE
+    donor_row DonorDetails%ROWTYPE;
+BEGIN
+    -- Retrieve data from DonorDetails table into donor_row using SELECT INTO
+    SELECT Donor_id, Donor_name, Blood_Bank_id, Blood_Bank_name, age, gender, Address, contact_number, NID_card_number
+    INTO donor_row
+    FROM DonorDetails
+    WHERE Donor_id = 1;
+    -- Display the retrieved donor information using a single DBMS_OUTPUT.PUT_LINE statement
+    DBMS_OUTPUT.PUT_LINE('Donor ID: ' || donor_row.Donor_id || ', Donor Name: ' || donor_row.Donor_name);
+END;
+/
+
+--Q3.Below is a PL/SQL block that demonstrates similar functionality using your BloodBank table. This block fetches data from the BloodBank table using a cursor, iterates over the rows, and prints information about each blood bank along with the row count:
+
+SET SERVEROUTPUT ON;
+DECLARE
+    CURSOR bloodbank_cursor IS SELECT * FROM BloodBank;
+    bloodbank_rec BloodBank%ROWTYPE;
+BEGIN
+    OPEN bloodbank_cursor;
+    FETCH bloodbank_cursor INTO bloodbank_rec;
+    WHILE bloodbank_cursor%FOUND LOOP
+    DBMS_OUTPUT.PUT_LINE('Blood Bank ID: ' || bloodbank_rec.Blood_Bank_id ||
+                             ', Name: ' || bloodbank_rec.Blood_Bank_name ||
+                             ', Location: ' || bloodbank_rec.location);
+        DBMS_OUTPUT.PUT_LINE('Row Count: ' || bloodbank_cursor%ROWCOUNT);
+        FETCH bloodbank_cursor INTO bloodbank_rec;
+    END LOOP;
+    CLOSE bloodbank_cursor;
+END;
+/
+
+
+-- procedures
+--Q1. want to retrieve information from the BloodBank and BloodCollection tables based on a given Blood_Bank_id. The procedure will take an input parameter (p_blood_bank_id) and will populate output parameters (p_blood_bank_name, p_total_positive_quantity, p_next_blood_bank_id) based on the retrieved data. Here's the PL/SQL procedure:
+
+SET SERVEROUTPUT ON;
+
+CREATE OR REPLACE PROCEDURE GetBloodBankDetails(
+  p_blood_bank_id IN BloodBank.Blood_Bank_id%TYPE,
+  p_blood_bank_name OUT BloodBank.Blood_Bank_name%TYPE,
+  p_total_positive_quantity OUT NUMBER,
+  p_next_blood_bank_id IN OUT BloodBank.Blood_Bank_id%TYPE
+)
+AS
+  t_show CHAR(30);
+BEGIN
+  t_show := 'From procedure: ';
+  SELECT Blood_Bank_name INTO p_blood_bank_name
+  FROM BloodBank
+  WHERE Blood_Bank_id = p_blood_bank_id;
+  SELECT SUM(Quantity_A_positive + Quantity_B_positive + Quantity_O_positive + Quantity_AB_positive)
+  INTO p_total_positive_quantity
+  FROM BloodCollection
+  WHERE Blood_Bank_id = p_blood_bank_id;
+  p_next_blood_bank_id := p_blood_bank_id + 1;
+  DBMS_OUTPUT.PUT_LINE(t_show || 'Blood Bank ID: ' || p_blood_bank_id || ', ' ||
+                       'Name: ' || p_blood_bank_name || ', ' ||
+                       'Total Positive Quantity: ' || p_total_positive_quantity || ', ' ||
+                       'Next Blood Bank ID: ' || p_next_blood_bank_id);
+END;
+/
+
+set serveroutput on
+declare 
+p BloodBank.Blood_Bank_id%TYPE:=5;
+q BloodBank.Blood_Bank_name%TYPE;
+r NUMBER;
+s BloodBank.Blood_Bank_id%TYPE;
+
+begin
+GetBloodBankDetails(p,q,r,s);
+end;
+/
+
+
+--- procedures
+--Q1. retrieves the Blood_Bank_name based on a given Blood_Bank_id, you can use the following PL/SQL function:
+
+SET SERVEROUTPUT ON;
+CREATE OR REPLACE FUNCTION GetBloodBankName(
+  p_blood_bank_id IN BloodBank.Blood_Bank_id%TYPE
+) RETURN BloodBank.Blood_Bank_name%TYPE
+AS
+  v_blood_bank_name BloodBank.Blood_Bank_name%TYPE;
+BEGIN
+  SELECT Blood_Bank_name
+  INTO v_blood_bank_name
+  FROM BloodBank
+  WHERE Blood_Bank_id = p_blood_bank_id;
+  RETURN v_blood_bank_name;
+END;
+/
+
+set serveroutput on
+declare 
+value varchar2(20);
+begin
+value:=GetBloodBankName(5);
+DBMS_OUTPUT.PUT_LINE('the bloodbank name is : '|| value);
+end;
+/
+
+-- drop procedure and functions
+drop procedure GetBloodBankDetails;
+drop function GetBloodBankName;
+
+-- Triggers
+--Q1.trigger for tables BloodBank and BloodCollection that automatically deletes related records when a row is deleted from the BloodCollection table
+
+SET SERVEROUTPUT ON;
+CREATE OR REPLACE TRIGGER BloodCollection_Delete_Cascade
+BEFORE DELETE ON BloodCollection
+FOR EACH ROW
+BEGIN
+  DELETE FROM DonorDetails
+  WHERE Blood_Bank_id = :OLD.Blood_Bank_id
+    AND Blood_Bank_name = :OLD.Blood_Bank_name;
+  DELETE FROM Transfussion
+  WHERE Blood_Bank_id = :OLD.Blood_Bank_id
+    AND Blood_Bank_name = :OLD.Blood_Bank_name;
+  DELETE FROM BloodStorageCondition
+  WHERE Blood_Bank_id = :OLD.Blood_Bank_id
+    AND Blood_Bank_name = :OLD.Blood_Bank_name;
+  DELETE FROM BloodBank
+  WHERE Blood_Bank_id = :OLD.Blood_Bank_id
+    AND Blood_Bank_name = :OLD.Blood_Bank_name;
+END;
+/
