@@ -1,0 +1,97 @@
+--  DDL commands for Table
+
+
+--DDL command ADD new column
+
+-- Example: Adding a new column 'email' of type varchar2(50)
+ALTER TABLE BloodBank ADD email varchar2(50);
+
+-- Example: Adding a new column 'collection_date' of type varchar2(20)
+ALTER TABLE BloodCollection ADD collection_date varchar2(20);
+
+-- Example: Adding a new column 'blood_type' of type varchar2(5)
+ALTER TABLE DonorDetails ADD blood_type varchar2(5);
+
+-- Example: Adding a new column 'transfusion_type' of type varchar2(30)
+ALTER TABLE Transfussion ADD transfusion_type varchar2(30);
+
+-- Example: Adding a new column 'storage_temperature' of type number(5,2)
+ALTER TABLE BloodStorageCondition ADD storage_temperature number(5,2);
+
+
+--DDL command MODIFY existing column
+
+-- Example: modifying column 'email' of type varchar2(50) to char(50)
+ALTER TABLE BloodBank MODIFY email char(50);
+
+-- Example: modifying column 'collection_date' of type varchar2(50) to char(50)
+ALTER TABLE BloodCollection MODIFY collection_date char(50);
+
+-- Example: modifying column 'blood_type' of type varchar2(50) to char(50)
+ALTER TABLE DonorDetails MODIFY blood_type char(50);
+
+-- Example: modifying column 'transfusion_type' of type varchar2(50) to char(50)
+ALTER TABLE Transfussion MODIFY transfusion_type char(50);
+
+-- Example: modifying column 'storage_temperature' of type number(5,2) to number(6,3)
+ALTER TABLE BloodStorageCondition MODIFY storage_temperature number(6,3);
+
+
+--DDL command RENAME existing column
+
+-- Example: RENAMING column 'email' to 'em'
+ALTER TABLE BloodBank RENAME column  email to em;
+
+-- Example: RENAMING column 'collection_date' to 'cd'
+ALTER TABLE BloodCollection RENAME column  collection_date to cd;
+
+-- Example: RENAMING column 'blood_type' to 'bt'
+ALTER TABLE DonorDetails RENAME column  blood_type to bt;
+
+-- Example: RENAMING column 'transfusion_type' to 'tt'
+ALTER TABLE Transfussion RENAME column  transfusion_type to tt;
+
+-- Example: RENAMING column 'storage_temperature' to 'st' 
+ALTER TABLE BloodStorageCondition RENAME column  storage_temperature to st;
+
+
+--DDL command DROP existing column
+
+-- Example: DROPING column 'email' to 'em'
+ALTER TABLE BloodBank DROP column em;
+
+-- Example: DROPING column 'collection_date' to 'cd'
+ALTER TABLE BloodCollection DROP column cd;
+
+-- Example: DROPING column 'blood_type' to 'bt'
+ALTER TABLE DonorDetails DROP column bt;
+
+-- Example: DROPING column 'transfusion_type' to 'tt'
+ALTER TABLE Transfussion DROP column tt;
+
+-- Example: DROPING column 'storage_temperature' to 'st' 
+ALTER TABLE BloodStorageCondition DROP column st;
+
+
+-- Displaying table data using SELECT command\
+
+-- Showing all data
+select * from BloodBank;
+select * from BloodCollection;
+select * from DonorDetails;
+select * from Transfussion;
+select * from BloodStorageCondition;
+
+-- Showing selective data
+select Blood_Bank_id,Blood_Bank_name from BloodBank;
+select Blood_Bank_id,Blood_Bank_name from BloodCollection;
+select Blood_Bank_id,Blood_Bank_name from DonorDetails;
+select Blood_Bank_id,Blood_Bank_name from Transfussion;
+select Blood_Bank_id,Blood_Bank_name from BloodStorageCondition;
+
+-- using select with where conditions
+select * from BloodBank where Blood_Bank_id<=2;
+select * from BloodCollection where Blood_Bank_id<=2;
+select * from DonorDetails where Blood_Bank_id<=2;
+select * from Transfussion where Blood_Bank_id<=2;
+select * from BloodStorageCondition where Blood_Bank_id<=2;
