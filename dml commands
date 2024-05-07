@@ -1,0 +1,109 @@
+-- DML commands for all tables
+
+-- Inserting data into the BloodBank table 
+
+INSERT INTO BloodBank (Blood_Bank_id, Blood_Bank_name, location, contact_person_name, contact_number)VALUES
+(1, 'Dhaka Blood Bank', 'Dhaka, Bangladesh', 'Mohammad Rahman', 01712345678);
+INSERT INTO BloodBank (Blood_Bank_id, Blood_Bank_name, location, contact_person_name, contact_number)VALUES    
+(2, 'Chittagong Blood Bank', 'Chittagong, Bangladesh', 'Fatima Akhtar', 01812345678);
+INSERT INTO BloodBank (Blood_Bank_id, Blood_Bank_name, location, contact_person_name, contact_number)VALUES
+(3, 'Khulna Blood Bank', 'Khulna, Bangladesh', 'Rahim Khan', 01912345678);
+INSERT INTO BloodBank (Blood_Bank_id, Blood_Bank_name, location, contact_person_name, contact_number)VALUES
+(4, 'Rajshahi Blood Bank', 'Rajshahi, Bangladesh', 'Sara Ahmed', 01512345678);
+INSERT INTO BloodBank (Blood_Bank_id, Blood_Bank_name, location, contact_person_name, contact_number)VALUES
+(5, 'Sylhet Blood Bank', 'Sylhet, Bangladesh', 'Kamal Hussain', 01612345678);
+INSERT INTO BloodBank (Blood_Bank_id, Blood_Bank_name, location, contact_person_name, contact_number)VALUES
+(6, 'Barisal Blood Bank', 'Barisal, Bangladesh', 'Jamal Islam', 01212345678);
+INSERT INTO BloodBank (Blood_Bank_id, Blood_Bank_name, location, contact_person_name, contact_number)VALUES
+(7, 'Rangpur Blood Bank', 'Rangpur, Bangladesh', 'Ayesha Begum', 01312345678);
+INSERT INTO BloodBank (Blood_Bank_id, Blood_Bank_name, location, contact_person_name, contact_number)VALUES
+(8, 'Comilla Blood Bank', 'Comilla, Bangladesh', 'Abdul Rahman', 01412345678);
+
+
+-- Inserting data into the BloodCollection table
+
+INSERT INTO BloodCollection (Blood_Bank_id, Blood_Bank_name, Quantity_A_positive, Quantity_A_negative, Quantity_B_positive, Quantity_B_negative,Quantity_O_positive, Quantity_O_negative,Quantity_AB_positive, Quantity_AB_negative)VALUES
+(1, 'Dhaka Blood Bank', 100, 50, 80, 40, 120, 60, 30, 20);
+INSERT INTO BloodCollection (Blood_Bank_id, Blood_Bank_name, Quantity_A_positive, Quantity_A_negative, Quantity_B_positive, Quantity_B_negative,Quantity_O_positive, Quantity_O_negative,Quantity_AB_positive, Quantity_AB_negative)VALUES
+(2, 'Chittagong Blood Bank', 80, 40, 60, 30, 90, 45, 25, 15);
+INSERT INTO BloodCollection (Blood_Bank_id, Blood_Bank_name, Quantity_A_positive, Quantity_A_negative, Quantity_B_positive, Quantity_B_negative,Quantity_O_positive, Quantity_O_negative,Quantity_AB_positive, Quantity_AB_negative)VALUES
+(3, 'Khulna Blood Bank', 70, 35, 55, 25, 80, 40, 20, 10);
+INSERT INTO BloodCollection (Blood_Bank_id, Blood_Bank_name, Quantity_A_positive, Quantity_A_negative, Quantity_B_positive, Quantity_B_negative,Quantity_O_positive, Quantity_O_negative,Quantity_AB_positive, Quantity_AB_negative)VALUES
+(4, 'Rajshahi Blood Bank', 90, 45, 65, 30, 100, 50, 35, 25);
+INSERT INTO BloodCollection (Blood_Bank_id, Blood_Bank_name, Quantity_A_positive, Quantity_A_negative, Quantity_B_positive, Quantity_B_negative,Quantity_O_positive, Quantity_O_negative,Quantity_AB_positive, Quantity_AB_negative)VALUES
+(5, 'Sylhet Blood Bank', 85, 42, 58, 28, 95, 48, 28, 18);
+INSERT INTO BloodCollection (Blood_Bank_id, Blood_Bank_name, Quantity_A_positive, Quantity_A_negative, Quantity_B_positive, Quantity_B_negative,Quantity_O_positive, Quantity_O_negative,Quantity_AB_positive, Quantity_AB_negative)VALUES
+(6, 'Barisal Blood Bank', 75, 38, 50, 25, 85, 42, 22, 12);
+INSERT INTO BloodCollection (Blood_Bank_id, Blood_Bank_name, Quantity_A_positive, Quantity_A_negative, Quantity_B_positive, Quantity_B_negative,Quantity_O_positive, Quantity_O_negative,Quantity_AB_positive, Quantity_AB_negative)VALUES
+(7, 'Rangpur Blood Bank', 60, 30, 45, 20, 70, 35, 18, 8);
+INSERT INTO BloodCollection (Blood_Bank_id, Blood_Bank_name, Quantity_A_positive, Quantity_A_negative, Quantity_B_positive, Quantity_B_negative,Quantity_O_positive, Quantity_O_negative,Quantity_AB_positive, Quantity_AB_negative)VALUES
+(8, 'Comilla Blood Bank', 55, 28, 40, 18, 65, 32, 15, 5);
+
+
+-- Inserting data into the DonorDetails table
+
+INSERT INTO DonorDetails (Donor_id, Donor_name, Blood_Bank_id, Blood_Bank_name, age, gender, Address, contact_number, NID_card_number)VALUES
+(1, 'Abdul Rahman', 1, 'Dhaka Blood Bank', 25, 'Male', '123 Main Street, Dhaka', 1234567890, 123456789012);
+INSERT INTO DonorDetails (Donor_id, Donor_name, Blood_Bank_id, Blood_Bank_name, age, gender, Address, contact_number, NID_card_number)VALUES
+(2, 'Ayesha Khan', 2, 'Chittagong Blood Bank', 30, 'Female', '456 Park Avenue, Chittagong', 9876543210, 987654321098);
+INSERT INTO DonorDetails (Donor_id, Donor_name, Blood_Bank_id, Blood_Bank_name, age, gender, Address, contact_number, NID_card_number)VALUES
+(3, 'Rafiqul Islam', 3, 'Khulna Blood Bank', 40, 'Male', '789 Elm Road,khulna ', 2345678901, 234567890123);
+INSERT INTO DonorDetails (Donor_id, Donor_name, Blood_Bank_id, Blood_Bank_name, age, gender, Address, contact_number, NID_card_number)VALUES
+(4, 'Farhana Begum', 4, 'Rajshahi Blood Bank', 22, 'Female', '321 Oak Lane, Rajshahi', 3456789012, 345678901234);
+INSERT INTO DonorDetails (Donor_id, Donor_name, Blood_Bank_id, Blood_Bank_name, age, gender, Address, contact_number, NID_card_number)VALUES
+(5, 'Mehedi Ahmed', 5, 'Sylhet Blood Bank', 28, 'Male', '555 Pine Street, Sylhet', 4567890123, 456789012345);
+INSERT INTO DonorDetails (Donor_id, Donor_name, Blood_Bank_id, Blood_Bank_name, age, gender, Address, contact_number, NID_card_number)VALUES
+(6, 'Sadia Islam', 6, 'Barisal Blood Bank', 35, 'Female', '777 Maple Drive, Barisal', 5678901234, 567890123456);
+INSERT INTO DonorDetails (Donor_id, Donor_name, Blood_Bank_id, Blood_Bank_name, age, gender, Address, contact_number, NID_card_number)VALUES
+(7, 'Imran Khan', 7, 'Rangpur Blood Bank', 45, 'Male', '999 Cedar Avenue, Rangpur', 6789012345, 678901234567);
+INSERT INTO DonorDetails (Donor_id, Donor_name, Blood_Bank_id, Blood_Bank_name, age, gender, Address, contact_number, NID_card_number)VALUES
+(8, 'Sabrina Chowdhury', 8, 'Comilla Blood Bank', 32, 'Female', '222 Walnut Street, Comilla', 7890123456, 789012345678);
+
+
+-- Inserting data into the Transfussion table
+
+INSERT INTO Transfussion (transfussion_id, Blood_Bank_id, Blood_Bank_name, Received_Quantity, date_of_transfussion, monitoring_doc_name)VALUES
+(1, 1, 'Dhaka Blood Bank', 5, '2024-05-01', 'Dr. Rahman');
+INSERT INTO Transfussion (transfussion_id, Blood_Bank_id, Blood_Bank_name, Received_Quantity, date_of_transfussion, monitoring_doc_name)VALUES
+(2, 2, 'Chittagong Blood Bank', 8, '2024-04-28', 'Dr. Khan');
+INSERT INTO Transfussion (transfussion_id, Blood_Bank_id, Blood_Bank_name, Received_Quantity, date_of_transfussion, monitoring_doc_name)VALUES
+(3, 3, 'Khulna Blood Bank', 3, '2024-05-02', 'Dr. Islam');
+INSERT INTO Transfussion (transfussion_id, Blood_Bank_id, Blood_Bank_name, Received_Quantity, date_of_transfussion, monitoring_doc_name)VALUES
+(4, 4, 'Rajshahi Blood Bank', 6, '2024-04-30', 'Dr. Ahmed');
+INSERT INTO Transfussion (transfussion_id, Blood_Bank_id, Blood_Bank_name, Received_Quantity, date_of_transfussion, monitoring_doc_name)VALUES
+(5, 5, 'Sylhet Blood Bank', 4, '2024-05-03', 'Dr. Begum');
+INSERT INTO Transfussion (transfussion_id, Blood_Bank_id, Blood_Bank_name, Received_Quantity, date_of_transfussion, monitoring_doc_name)VALUES
+(6, 6, 'Barisal Blood Bank', 7, '2024-04-29', 'Dr. Chowdhury');
+INSERT INTO Transfussion (transfussion_id, Blood_Bank_id, Blood_Bank_name, Received_Quantity, date_of_transfussion, monitoring_doc_name)VALUES
+(7, 7, 'Rangpur Blood Bank', 2, '2024-05-01', 'Dr. Khan');
+INSERT INTO Transfussion (transfussion_id, Blood_Bank_id, Blood_Bank_name, Received_Quantity, date_of_transfussion, monitoring_doc_name)VALUES
+(8, 8, 'Comilla Blood Bank', 9, '2024-04-27', 'Dr. Rahman');
+
+
+-- Inserting data into the BloodStorageCondition table
+
+INSERT INTO BloodStorageCondition (Blood_Bank_id, Blood_Bank_name, Expire_Date_A_group, Expire_Date_B_group, Expire_Date_O_group, Expire_Date_AB_group)VALUES
+(1, 'Dhaka Blood Bank', '2024-06-30', '2024-07-15', '2024-07-10', '2024-07-20');
+INSERT INTO BloodStorageCondition (Blood_Bank_id, Blood_Bank_name, Expire_Date_A_group, Expire_Date_B_group, Expire_Date_O_group, Expire_Date_AB_group)VALUES
+(2, 'Chittagong Blood Bank', '2024-07-01', '2024-07-16', '2024-07-11', '2024-07-21');
+INSERT INTO BloodStorageCondition (Blood_Bank_id, Blood_Bank_name, Expire_Date_A_group, Expire_Date_B_group, Expire_Date_O_group, Expire_Date_AB_group)VALUES
+(3, 'Khulna Blood Bank', '2024-06-28', '2024-07-13', '2024-07-08', '2024-07-18');
+INSERT INTO BloodStorageCondition (Blood_Bank_id, Blood_Bank_name, Expire_Date_A_group, Expire_Date_B_group, Expire_Date_O_group, Expire_Date_AB_group)VALUES
+(4, 'Rajshahi Blood Bank', '2024-07-02', '2024-07-17', '2024-07-12', '2024-07-22');
+INSERT INTO BloodStorageCondition (Blood_Bank_id, Blood_Bank_name, Expire_Date_A_group, Expire_Date_B_group, Expire_Date_O_group, Expire_Date_AB_group)VALUES
+(5, 'Sylhet Blood Bank', '2024-06-29', '2024-07-14', '2024-07-09', '2024-07-19');
+INSERT INTO BloodStorageCondition (Blood_Bank_id, Blood_Bank_name, Expire_Date_A_group, Expire_Date_B_group, Expire_Date_O_group, Expire_Date_AB_group)VALUES
+(6, 'Barisal Blood Bank', '2024-07-03', '2024-07-18', '2024-07-13', '2024-07-23');
+INSERT INTO BloodStorageCondition (Blood_Bank_id, Blood_Bank_name, Expire_Date_A_group, Expire_Date_B_group, Expire_Date_O_group, Expire_Date_AB_group)VALUES
+(7, 'Rangpur Blood Bank', '2024-06-27', '2024-07-12', '2024-07-07', '2024-07-17');
+INSERT INTO BloodStorageCondition (Blood_Bank_id, Blood_Bank_name, Expire_Date_A_group, Expire_Date_B_group, Expire_Date_O_group, Expire_Date_AB_group)VALUES
+(8, 'Comilla Blood Bank', '2024-07-04', '2024-07-19', '2024-07-14', '2024-07-24');
+
+
+-- describe commands
+describe BloodBank;
+describe BloodCollection;
+describe DonorDetails;
+describe Transfussion;
+describe BloodStorageCondition;
+
